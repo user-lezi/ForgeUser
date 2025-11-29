@@ -48,7 +48,7 @@ export class ForgeUser extends ForgeExtension {
     this.commands = new ForgeUserCommandManager(client);
 
     EventManager.load("ForgeUserEvents", __dirname + "/events");
-    // this.load(__dirname + "/functions")
+    this.load(__dirname + "/functions");
 
     if (this.options?.events?.length)
       client.events.load("ForgeUserEvents", this.options.events);

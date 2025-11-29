@@ -1,7 +1,9 @@
 import { BaseEventHandler, ForgeClient } from "@tryforge/forgescript";
 import { ForgeUser } from "..";
+import { APIMessage } from "discord-api-types/v10";
 export interface IForgeUserEvents {
   open: [];
+  messageCreate: [APIMessage];
 }
 
 export class ForgeUserEventHandler<
@@ -10,6 +12,7 @@ export class ForgeUserEventHandler<
   register(client: ForgeClient): void {
     client
       .getExtension(ForgeUser, true)
+      // @ts-ignore - idk vro
       .bot.on(this.name, this.listener.bind(client));
   }
 }

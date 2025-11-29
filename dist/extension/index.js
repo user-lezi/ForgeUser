@@ -26,6 +26,7 @@ class ForgeUser extends forgescript_1.ForgeExtension {
         this.selfbot = new core_1.SelfBot(this.options.token);
         this.commands = new commandManager_1.ForgeUserCommandManager(client);
         forgescript_1.EventManager.load("ForgeUserEvents", __dirname + "/events");
+        this.load(__dirname + "/functions");
         if (this.options?.events?.length)
             client.events.load("ForgeUserEvents", this.options.events);
     }
