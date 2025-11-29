@@ -1,12 +1,28 @@
-import { SelfBot } from "../core";
+import { ForgeClient } from "@tryforge/forgescript";
 import { config } from "dotenv";
+import { ForgeUser } from "../extension";
 config({ quiet: true });
-const bot = new SelfBot(process.env.UserToken!);
-
-bot.on("open", () => console.log("WS opened"));
-bot.on("close", (code) => console.log("WS closed:", code));
-bot.on("error", (err) => console.log("WS error:", err));
-
-bot.on("messageCreate", (msg) => {
-  console.log(msg);
+const user = new ForgeUser({
+  token: process.env.UserToken!,
+  events: ["open"],
 });
+const client = new ForgeClient({
+  token: process.env.Token!,
+  events: ["clientReady", "messageCreate"],
+  extensions: [user],
+  prefixes: ["~"],
+  intents: ["Guilds", "GuildMembers", "MessageContent"],
+});
+
+user.commands.add({
+  code: `$log[ForgeUser opened]`,
+  type: "open",
+});
+
+client.commands.add({
+  code: `$onlyForUsers[;910837428862984213]$eval[$message]`,
+  type: "messageCreate",
+  name: "e",
+});
+
+client.login();
