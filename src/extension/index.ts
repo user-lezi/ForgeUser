@@ -4,8 +4,7 @@ import {
   ForgeExtension,
 } from "@tryforge/forgescript";
 import { SelfBot } from "../core";
-import { ForgeUserCommandManager } from "./structures/commandManager";
-import { IForgeUserEvents } from "./structures/eventManager";
+import { ForgeUserCommandManager, IForgeUserEvents } from "./structures";
 
 /** ForgeUser Options */
 export interface IForgeUserOptions {

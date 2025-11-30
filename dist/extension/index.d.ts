@@ -1,7 +1,6 @@
 import { ForgeClient, ForgeExtension } from "@tryforge/forgescript";
 import { SelfBot } from "../core";
-import { ForgeUserCommandManager } from "./structures/commandManager";
-import { IForgeUserEvents } from "./structures/eventManager";
+import { ForgeUserCommandManager, IForgeUserEvents } from "./structures";
 export interface IForgeUserOptions {
     token: string;
     events: (keyof IForgeUserEvents)[];
