@@ -19,9 +19,15 @@ user.commands.add({
   type: "open",
 });
 
-user.commands.add({
+// user.commands.add({
+//   type: "messageCreate",
+//   code: '$if[$getUserMessage[authorID]==910837428862984213;$sendMessage[$getUserMessage[channelID];omg "$getUserMessage[content]"]]',
+// });
+
+client.commands.add({
   type: "messageCreate",
-  code: '$if[$getUserMessage[authorID]==910837428862984213;$sendMessage[$getUserMessage[channelID];omg "$getUserMessage[content]"]]',
+  code: `$log[$message]`,
+  unprefixed: true,
 });
 
 client.commands.add({

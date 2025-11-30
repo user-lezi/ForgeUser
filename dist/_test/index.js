@@ -19,9 +19,10 @@ user.commands.add({
     code: `$log[ForgeUser opened]`,
     type: "open",
 });
-user.commands.add({
+client.commands.add({
     type: "messageCreate",
-    code: '$if[$getUserMessage[authorID]==910837428862984213;$sendMessage[$getUserMessage[channelID];omg "$getUserMessage[content]"]]',
+    code: `$log[$message]`,
+    unprefixed: true,
 });
 client.commands.add({
     code: `$onlyForUsers[;910837428862984213]$eval[$message]`,
