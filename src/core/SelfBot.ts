@@ -6,24 +6,11 @@ import {
   APIMessage,
 } from "discord-api-types/v10";
 import { TypedEmitter } from "tiny-typed-emitter";
+import { SelfBotEvents } from "./types";
 
-export type TransformEvents<T> = {
+type TransformEvents<T> = {
   [P in keyof T]: T[P] extends any[] ? (...args: T[P]) => void : never;
 };
-
-export interface SelfBotEvents {
-  /** Fired when the WebSocket connection opens. */
-  open: [];
-
-  /** Fired when the connection closes. */
-  close: [code: number, reason: Buffer];
-
-  /** Fired when an error occurs. */
-  error: [err: Error];
-
-  /** Fired when a MESSAGE_CREATE packet is received. */
-  messageCreate: [APIMessage];
-}
 
 export class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
   private ws: WebSocket;
@@ -99,7 +86,6 @@ export class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
         break;
 
       default:
-        // Optional: emit "raw" events or extend switch-case
         break;
     }
   }

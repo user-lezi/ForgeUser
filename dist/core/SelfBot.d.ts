@@ -1,14 +1,8 @@
-import { APIMessage } from "discord-api-types/v10";
 import { TypedEmitter } from "tiny-typed-emitter";
-export type TransformEvents<T> = {
+import { SelfBotEvents } from "./types";
+type TransformEvents<T> = {
     [P in keyof T]: T[P] extends any[] ? (...args: T[P]) => void : never;
 };
-export interface SelfBotEvents {
-    open: [];
-    close: [code: number, reason: Buffer];
-    error: [err: Error];
-    messageCreate: [APIMessage];
-}
 export declare class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
     token: string;
     private ws;
@@ -24,3 +18,4 @@ export declare class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>
     private startHeartbeat;
     private send;
 }
+export {};
