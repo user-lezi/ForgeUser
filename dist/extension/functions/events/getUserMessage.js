@@ -10,10 +10,12 @@ exports.default = new forgescript_1.NativeFunction({
     version: "1.0.0",
     output: forgescript_1.ArgType.String,
     args: [
-        forgescript_1.Arg.requiredEnum(message_1.MessageProperty, "property", "The property to pull"),
+        forgescript_1.Arg.optionalEnum(message_1.MessageProperty, "property", "The property to pull"),
         forgescript_1.Arg.optionalString("sepearator", "Separator to use in case of array"),
     ],
     async execute(ctx, [prop, sep]) {
+        if (!prop)
+            return this.successJSON(ctx.runtime.extras);
         return this.success(message_1.MessageProperties[prop](ctx.runtime.extras, sep));
     },
 });

@@ -10,11 +10,12 @@ export default new NativeFunction({
   version: "1.0.0",
   output: ArgType.String,
   args: [
-    Arg.requiredEnum(MessageProperty, "property", "The property to pull"),
+    Arg.optionalEnum(MessageProperty, "property", "The property to pull"),
     Arg.optionalString("sepearator", "Separator to use in case of array"),
   ],
 
   async execute(ctx, [prop, sep]) {
+    if (!prop) return this.successJSON(ctx.runtime.extras);
     return this.success(
       MessageProperties[prop](ctx.runtime.extras as any, sep),
     );
