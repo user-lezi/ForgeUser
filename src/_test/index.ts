@@ -11,7 +11,7 @@ const client = new ForgeClient({
   events: ["clientReady", "messageCreate"],
   extensions: [user],
   prefixes: ["~"],
-  intents: ["Guilds", "GuildMembers", "MessageContent"],
+  intents: ["Guilds", "GuildMembers", "GuildMessages", "MessageContent"],
 });
 
 user.commands.add({
@@ -19,15 +19,9 @@ user.commands.add({
   type: "open",
 });
 
-// user.commands.add({
-//   type: "messageCreate",
-//   code: '$if[$getUserMessage[authorID]==910837428862984213;$sendMessage[$getUserMessage[channelID];omg "$getUserMessage[content]"]]',
-// });
-
-client.commands.add({
+user.commands.add({
   type: "messageCreate",
-  code: `$log[$message]`,
-  unprefixed: true,
+  code: '$if[$getUserMessage[authorID]==910837428862984213;$sendMessage[$getUserMessage[channelID];omg "$getUserMessage[content]"]]',
 });
 
 client.commands.add({
