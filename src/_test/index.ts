@@ -13,7 +13,6 @@ const client = new ForgeClient({
   prefixes: ["~"],
   intents: ["Guilds", "GuildMembers", "GuildMessages", "MessageContent"],
 });
-
 user.commands.add({
   code: `$log[ForgeUser opened]`,
   type: "open",

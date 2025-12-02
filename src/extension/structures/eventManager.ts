@@ -6,6 +6,7 @@ export interface IForgeUserEvents {
   close: [code: number, reason: Buffer];
   error: [err: Error];
   messageCreate: [APIMessage];
+  messageUpdate: [APIMessage];
 }
 
 export class ForgeUserEventHandler<
