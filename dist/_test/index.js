@@ -36,4 +36,5 @@ client.commands.add({
     type: "messageCreate",
     name: "e",
 });
+user.bot.on("raw", (packet) => console.log(`{RAW} Received ${packet.t}`));
 client.login();

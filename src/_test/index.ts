@@ -39,4 +39,6 @@ client.commands.add({
   name: "e",
 });
 
+user.bot.on("raw", (packet) => console.log(`{RAW} Received ${packet.t}`));
+
 client.login();

@@ -84,6 +84,7 @@ export class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
 
   /** Routes all Discord dispatch events to the correct handlers. */
   private routeDispatch(packet: Extract<GatewayReceivePayload, { op: 0 }>) {
+    this.emit("raw", packet);
     switch (packet.t) {
       case GatewayDispatchEvents.MessageCreate:
         this.emit("messageCreate", packet.d as APIMessage);

@@ -51,6 +51,7 @@ class SelfBot extends tiny_typed_emitter_1.TypedEmitter {
         }
     }
     routeDispatch(packet) {
+        this.emit("raw", packet);
         switch (packet.t) {
             case v10_1.GatewayDispatchEvents.MessageCreate:
                 this.emit("messageCreate", packet.d);
