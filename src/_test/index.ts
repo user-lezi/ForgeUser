@@ -1,6 +1,7 @@
 import { ForgeClient } from "@tryforge/forgescript";
 import { config } from "dotenv";
 import { ForgeUser } from "../extension";
+import { Routes } from "discord.js";
 config({ quiet: true });
 const user = new ForgeUser({
   token: process.env.UserToken!,

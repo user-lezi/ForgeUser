@@ -6,13 +6,15 @@ import {
   APIMessage,
 } from "discord-api-types/v10";
 import { TypedEmitter } from "tiny-typed-emitter";
-import { SelfBotEvents } from "./types";
+import { SelfBotEvents } from "../types";
+import { REST } from "./REST";
 
 type TransformEvents<T> = {
   [P in keyof T]: T[P] extends any[] ? (...args: T[P]) => void : never;
 };
 
 export class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
+  public rest: REST;
   private ws: WebSocket;
   private seq: number | null = null;
   private heartbeatInterval: NodeJS.Timeout | null = null;
@@ -20,6 +22,8 @@ export class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
   /** Creates a new SelfBot instance and connects to the Discord Gateway. */
   constructor(public token: string) {
     super();
+
+    this.rest = new REST({ token });
 
     this.ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
 

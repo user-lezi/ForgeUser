@@ -1,10 +1,12 @@
 import { TypedEmitter } from "tiny-typed-emitter";
-import { SelfBotEvents } from "./types";
+import { SelfBotEvents } from "../types";
+import { REST } from "./REST";
 type TransformEvents<T> = {
     [P in keyof T]: T[P] extends any[] ? (...args: T[P]) => void : never;
 };
 export declare class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
     token: string;
+    rest: REST;
     private ws;
     private seq;
     private heartbeatInterval;

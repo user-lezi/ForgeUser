@@ -4,14 +4,17 @@ exports.SelfBot = void 0;
 const ws_1 = require("ws");
 const v10_1 = require("discord-api-types/v10");
 const tiny_typed_emitter_1 = require("tiny-typed-emitter");
+const REST_1 = require("./REST");
 class SelfBot extends tiny_typed_emitter_1.TypedEmitter {
     token;
+    rest;
     ws;
     seq = null;
     heartbeatInterval = null;
     constructor(token) {
         super();
         this.token = token;
+        this.rest = new REST_1.REST({ token });
         this.ws = new ws_1.WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
         this.ws.on("open", () => this.onOpen());
         this.ws.on("close", (c, r) => this.onClose(c, r));
