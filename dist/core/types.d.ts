@@ -4,4 +4,5 @@ export interface SelfBotEvents {
     close: [code: number, reason: Buffer];
     error: [err: Error];
     messageCreate: [APIMessage];
+    messageUpdate: [APIMessage];
 }

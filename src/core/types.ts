@@ -12,4 +12,7 @@ export interface SelfBotEvents {
 
   /** Fired when a MESSAGE_CREATE packet is received. */
   messageCreate: [APIMessage];
+
+  /** Fired when a MESSAGE_UPDATE packet is received. */
+  messageUpdate: [APIMessage];
 }

@@ -84,7 +84,9 @@ export class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
       case GatewayDispatchEvents.MessageCreate:
         this.emit("messageCreate", packet.d as APIMessage);
         break;
-
+      case GatewayDispatchEvents.MessageUpdate:
+        this.emit("messageUpdate", packet.d as APIMessage);
+        break;
       default:
         break;
     }
