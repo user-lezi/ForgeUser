@@ -1,7 +1,8 @@
 import { BaseEventHandler, ForgeClient } from "@tryforge/forgescript";
 import { ForgeUser } from "..";
-import { APIMessage } from "discord-api-types/v10";
+import { APIMessage, GatewayDispatchPayload } from "discord-api-types/v10";
 export interface IForgeUserEvents {
+  raw: [GatewayDispatchPayload];
   open: [];
   close: [code: number, reason: Buffer];
   error: [err: Error];
