@@ -1,5 +1,5 @@
 import { ForgeClient, ForgeExtension } from "@tryforge/forgescript";
-import { SelfBot } from "../core";
+import { REST, SelfBot } from "../core";
 import { ForgeUserCommandManager, IForgeUserEvents } from "./structures";
 export interface IForgeUserOptions {
     token: string;
@@ -15,4 +15,5 @@ export declare class ForgeUser extends ForgeExtension {
     constructor(options?: Partial<IForgeUserOptions>);
     init(client: ForgeClient): void;
     get bot(): SelfBot;
+    get rest(): REST;
 }

@@ -3,7 +3,7 @@ import {
   ForgeClient,
   ForgeExtension,
 } from "@tryforge/forgescript";
-import { SelfBot } from "../core";
+import { REST, SelfBot } from "../core";
 import { ForgeUserCommandManager, IForgeUserEvents } from "./structures";
 
 /** ForgeUser Options */
@@ -56,5 +56,10 @@ export class ForgeUser extends ForgeExtension {
   /** Returns the active SelfBot instance. */
   public get bot(): SelfBot {
     return this.selfbot;
+  }
+
+  /** Returns the REST */
+  public get rest(): REST {
+    return this.selfbot.rest;
   }
 }

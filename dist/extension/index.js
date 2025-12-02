@@ -33,5 +33,8 @@ class ForgeUser extends forgescript_1.ForgeExtension {
     get bot() {
         return this.selfbot;
     }
+    get rest() {
+        return this.selfbot.rest;
+    }
 }
 exports.ForgeUser = ForgeUser;
