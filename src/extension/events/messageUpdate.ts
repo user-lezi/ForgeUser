@@ -7,7 +7,7 @@ export default new ForgeUserEventHandler({
   version: "1.0.0",
   description:
     "This event is triggered when the SelfBot receives MESSAGE_UPDATE packet.",
-  listener(apimessage) {
+  listener(msg, packet) {
     const commands = this.getExtension(ForgeUser, true).commands.get(
       "messageUpdate",
     );
@@ -17,7 +17,7 @@ export default new ForgeUserEventHandler({
         client: this,
         command,
         data: command.compiled.code,
-        extras: apimessage,
+        extras: packet,
       });
     }
   },

@@ -1,9 +1,6 @@
 import { APIMessage, GatewayDispatchPayload } from "discord-api-types/v10";
 
 export interface SelfBotEvents {
-  /** Raw Event: Fired when any sort of packet is received. */
-  raw: [GatewayDispatchPayload];
-
   /** Fired when the WebSocket connection opens. */
   open: [];
 
@@ -13,9 +10,12 @@ export interface SelfBotEvents {
   /** Fired when an error occurs. */
   error: [err: Error];
 
+  /** Raw Event: Fired when any sort of packet is received. */
+  raw: [GatewayDispatchPayload];
+
   /** Fired when a MESSAGE_CREATE packet is received. */
-  messageCreate: [APIMessage];
+  messageCreate: [APIMessage, GatewayDispatchPayload];
 
   /** Fired when a MESSAGE_UPDATE packet is received. */
-  messageUpdate: [APIMessage];
+  messageUpdate: [APIMessage, GatewayDispatchPayload];
 }

@@ -54,10 +54,10 @@ class SelfBot extends tiny_typed_emitter_1.TypedEmitter {
         this.emit("raw", packet);
         switch (packet.t) {
             case v10_1.GatewayDispatchEvents.MessageCreate:
-                this.emit("messageCreate", packet.d);
+                this.emit("messageCreate", packet.d, packet);
                 break;
             case v10_1.GatewayDispatchEvents.MessageUpdate:
-                this.emit("messageUpdate", packet.d);
+                this.emit("messageUpdate", packet.d, packet);
                 break;
             default:
                 break;
