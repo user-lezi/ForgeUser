@@ -6,7 +6,7 @@ const extension_1 = require("../extension");
 (0, dotenv_1.config)({ quiet: true });
 const user = new extension_1.ForgeUser({
     token: process.env.UserToken,
-    events: ["open", "messageCreate"],
+    events: ["open", "close", "error", "messageCreate"],
 });
 const client = new forgescript_1.ForgeClient({
     token: process.env.Token,
@@ -18,6 +18,14 @@ const client = new forgescript_1.ForgeClient({
 user.commands.add({
     code: `$log[ForgeUser opened]`,
     type: "open",
+});
+user.commands.add({
+    code: `$log[ForgeUser closed $js[ctx.runtime.extras]]`,
+    type: "close",
+});
+user.commands.add({
+    code: `$log[ForgeUser error $js[ctx.runtime.extras]]`,
+    type: "error",
 });
 user.commands.add({
     type: "messageCreate",
