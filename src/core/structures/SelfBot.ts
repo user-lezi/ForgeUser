@@ -18,6 +18,8 @@ export class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
   private ws: WebSocket;
   private seq: number | null = null;
   private heartbeatInterval: NodeJS.Timeout | null = null;
+  private lastHeartbeatSent: number = 0;
+  private lastPing: number = -1;
 
   /** Creates a new SelfBot instance and connects to the Discord Gateway. */
   constructor(public token: string) {
@@ -72,8 +74,8 @@ export class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
         this.routeDispatch(packet);
         break;
 
-      case 11: // Heartbeat ACK
-        // noop by design
+      case 11: // HEARTBEAT ACK
+        this.lastPing = Date.now() - this.lastHeartbeatSent;
         break;
     }
   }
@@ -124,6 +126,7 @@ export class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
     if (this.heartbeatInterval) clearInterval(this.heartbeatInterval);
 
     this.heartbeatInterval = setInterval(() => {
+      this.lastHeartbeatSent = Date.now();
       const payload: GatewaySendPayload = {
         op: 1,
         d: this.seq,
@@ -142,5 +145,10 @@ export class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
     if (this.ws.readyState === WebSocket.OPEN) {
       this.ws.send(JSON.stringify(payload));
     }
+  }
+
+  /** Ping yah */
+  public get ping() {
+    return this.lastPing;
   }
 }

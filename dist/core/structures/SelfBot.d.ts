@@ -10,6 +10,8 @@ export declare class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>
     private ws;
     private seq;
     private heartbeatInterval;
+    private lastHeartbeatSent;
+    private lastPing;
     constructor(token: string);
     private onOpen;
     private onClose;
@@ -19,5 +21,6 @@ export declare class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>
     private identify;
     private startHeartbeat;
     private send;
+    get ping(): number;
 }
 export {};

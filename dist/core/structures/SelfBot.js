@@ -11,6 +11,8 @@ class SelfBot extends tiny_typed_emitter_1.TypedEmitter {
     ws;
     seq = null;
     heartbeatInterval = null;
+    lastHeartbeatSent = 0;
+    lastPing = -1;
     constructor(token) {
         super();
         this.token = token;
@@ -47,6 +49,7 @@ class SelfBot extends tiny_typed_emitter_1.TypedEmitter {
                 this.routeDispatch(packet);
                 break;
             case 11:
+                this.lastPing = Date.now() - this.lastHeartbeatSent;
                 break;
         }
     }
@@ -81,6 +84,7 @@ class SelfBot extends tiny_typed_emitter_1.TypedEmitter {
         if (this.heartbeatInterval)
             clearInterval(this.heartbeatInterval);
         this.heartbeatInterval = setInterval(() => {
+            this.lastHeartbeatSent = Date.now();
             const payload = {
                 op: 1,
                 d: this.seq,
@@ -92,6 +96,9 @@ class SelfBot extends tiny_typed_emitter_1.TypedEmitter {
         if (this.ws.readyState === ws_1.WebSocket.OPEN) {
             this.ws.send(JSON.stringify(payload));
         }
+    }
+    get ping() {
+        return this.lastPing;
     }
 }
 exports.SelfBot = SelfBot;
