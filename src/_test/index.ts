@@ -5,7 +5,7 @@ import { Routes } from "discord.js";
 config({ quiet: true });
 const user = new ForgeUser({
   token: process.env.UserToken!,
-  events: ["open", "close", "error", "messageCreate"],
+  events: ["open", "close", "error", "messageCreate", "raw"],
 });
 const client = new ForgeClient({
   token: process.env.Token!,
@@ -39,6 +39,6 @@ client.commands.add({
   name: "e",
 });
 
-user.bot.on("raw", (packet) => console.log(`{RAW} Received ${packet.t}`));
+// user.bot.on("raw", (packet) => console.log(`{RAW} Received ${packet.t}`));
 
 client.login();

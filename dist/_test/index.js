@@ -6,7 +6,7 @@ const extension_1 = require("../extension");
 (0, dotenv_1.config)({ quiet: true });
 const user = new extension_1.ForgeUser({
     token: process.env.UserToken,
-    events: ["open", "close", "error", "messageCreate"],
+    events: ["open", "close", "error", "messageCreate", "raw"],
 });
 const client = new forgescript_1.ForgeClient({
     token: process.env.Token,
@@ -36,5 +36,4 @@ client.commands.add({
     type: "messageCreate",
     name: "e",
 });
-user.bot.on("raw", (packet) => console.log(`{RAW} Received ${packet.t}`));
 client.login();
