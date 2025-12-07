@@ -35,9 +35,9 @@ export interface IUserProfile {
       expires_at: string | null;
     } | null;
     banner: string;
-    theme_colors: Array<number>;
+    theme_colors: [number, number];
     popout_animation_particle_type: any;
-    emoji: any;
+    emoji: string | null;
   };
   badges: Array<{
     id: string;
@@ -51,5 +51,5 @@ export interface IUserProfile {
     id: string;
     nick: string | null;
   }>;
-  legacy_username: string;
+  legacy_username?: string;
 }
