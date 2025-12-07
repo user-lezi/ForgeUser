@@ -15,7 +15,7 @@ exports.default = new forgescript_1.NativeFunction({
         forgescript_1.Arg.optionalString("separator", "Separator to use in case of array"),
     ],
     version: "1.0.0",
-    output: forgescript_1.ArgType.String,
+    output: forgescript_1.ArgType.Unknown,
     async execute(ctx, [id, force, prop, sep]) {
         const rest = ctx.client.getExtension(__1.ForgeUser, true).rest;
         try {

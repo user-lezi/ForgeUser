@@ -19,7 +19,7 @@ export default new NativeFunction({
   ],
 
   version: "1.0.0",
-  output: ArgType.String,
+  output: ArgType.Unknown,
 
   async execute(ctx, [id, force, prop, sep]) {
     const rest = ctx.client.getExtension(ForgeUser, true).rest;
