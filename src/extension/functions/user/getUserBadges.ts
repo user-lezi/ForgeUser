@@ -26,8 +26,8 @@ export default new NativeFunction({
 
       if (!property) return this.successJSON(data.badges);
       return this.success(UserBadgeProperties[property](data, sep ?? ", "));
-    } catch (err) {
-      return this.customError(`REST Error: ${err}`);
+    } catch (err: any) {
+      return this.customError(err);
     }
   },
 });

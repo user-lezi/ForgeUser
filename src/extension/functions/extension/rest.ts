@@ -22,8 +22,8 @@ export default new NativeFunction({
       return this.successFormatted(
         await rest[method.toLowerCase() as "post"](route, body ?? undefined),
       );
-    } catch (err) {
-      return this.customError(`REST Error: ${err}`);
+    } catch (err: any) {
+      return this.customError(err);
     }
   },
 });

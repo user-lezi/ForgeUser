@@ -24,7 +24,7 @@ exports.default = new forgescript_1.NativeFunction({
             return this.success(userBadge_1.UserBadgeProperties[property](data, sep ?? ", "));
         }
         catch (err) {
-            return this.customError(`REST Error: ${err}`);
+            return this.customError(err);
         }
     },
 });

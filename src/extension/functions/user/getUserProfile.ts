@@ -31,8 +31,8 @@ export default new NativeFunction({
 
       if (!prop) return this.successJSON(data);
       return this.success(UserProfileProperties[prop](data, sep ?? ", "));
-    } catch (err) {
-      return this.customError(`REST Error: ${err}`);
+    } catch (err: any) {
+      return this.customError(err);
     }
   },
 });
