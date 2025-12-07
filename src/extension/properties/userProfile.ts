@@ -1,10 +1,7 @@
 import defineProperties from "@tryforge/forgescript/dist/functions/defineProperties";
 import { CDNRoutes, UserPremiumType } from "discord.js";
 import { IUserProfile } from "../../core/types";
-
-function cdn<S extends string>(s: S) {
-  return `https://cdn.discordapp.com${s}`;
-}
+import { cdn } from "../util";
 
 export enum UserProfileProperty {
   id = "id",
