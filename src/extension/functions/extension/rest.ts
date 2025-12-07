@@ -3,7 +3,7 @@ import { ForgeUser } from "../..";
 
 export default new NativeFunction({
   name: "$rest",
-  description: "Send API Request to Discord API.",
+  description: "Send API Request to Discord API via user-account.",
   unwrap: true,
   brackets: true,
   args: [

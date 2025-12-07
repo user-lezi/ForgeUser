@@ -4,7 +4,7 @@ const forgescript_1 = require("@tryforge/forgescript");
 const __1 = require("../..");
 exports.default = new forgescript_1.NativeFunction({
     name: "$rest",
-    description: "Send API Request to Discord API.",
+    description: "Send API Request to Discord API via user-account.",
     unwrap: true,
     brackets: true,
     args: [
