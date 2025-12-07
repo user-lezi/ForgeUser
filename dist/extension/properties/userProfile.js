@@ -15,6 +15,14 @@ var UserProfileProperty;
     UserProfileProperty["avatar"] = "avatar";
     UserProfileProperty["accentColor"] = "accentColor";
     UserProfileProperty["banner"] = "banner";
+    UserProfileProperty["bannerColor"] = "bannerColor";
+    UserProfileProperty["bio"] = "bio";
+    UserProfileProperty["clanTag"] = "clanTag";
+    UserProfileProperty["clanID"] = "clanID";
+    UserProfileProperty["clanBadge"] = "clanBadge";
+    UserProfileProperty["premiumType"] = "premiumType";
+    UserProfileProperty["premiumSince"] = "premiumSince";
+    UserProfileProperty["premiumGuildSince"] = "premiumGuildSince";
 })(UserProfileProperty || (exports.UserProfileProperty = UserProfileProperty = {}));
 exports.UserProfileProperties = (0, defineProperties_1.default)({
     id: (i) => i?.user.id,
@@ -29,4 +37,14 @@ exports.UserProfileProperties = (0, defineProperties_1.default)({
         ? discord_js_1.CDNRoutes.userBanner(i.user.id, i.user.banner, i.user.banner.startsWith("a_") ? "gif" : "png")
         : "",
     accentColor: (i) => i?.user.accent_color,
+    bannerColor: (i) => i?.user.banner_color,
+    bio: (i) => i?.user.bio,
+    clanID: (i) => i?.user.clan?.identity_guild_id,
+    clanBadge: (i) => i?.user.clan?.badge
+        ? discord_js_1.CDNRoutes.guildTagBadge(i.user.clan.identity_guild_id, i.user.clan.badge, i.user.clan.badge.startsWith("a_") ? "gif" : "png")
+        : "",
+    clanTag: (i) => i?.user.clan?.tag,
+    premiumType: (i) => discord_js_1.UserPremiumType[i?.premium_type],
+    premiumSince: (i) => (i?.premium_since ? Date.parse(i.premium_since) : ""),
+    premiumGuildSince: (i) => i?.premium_guild_since ? Date.parse(i.premium_guild_since) : "",
 });

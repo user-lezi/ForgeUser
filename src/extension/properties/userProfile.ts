@@ -1,5 +1,5 @@
 import defineProperties from "@tryforge/forgescript/dist/functions/defineProperties";
-import { CDNRoutes } from "discord.js";
+import { CDNRoutes, UserPremiumType } from "discord.js";
 import { IUserProfile } from "../../core/types";
 
 export enum UserProfileProperty {
@@ -10,6 +10,14 @@ export enum UserProfileProperty {
   avatar = "avatar",
   accentColor = "accentColor",
   banner = "banner",
+  bannerColor = "bannerColor",
+  bio = "bio",
+  clanTag = "clanTag",
+  clanID = "clanID",
+  clanBadge = "clanBadge",
+  premiumType = "premiumType",
+  premiumSince = "premiumSince",
+  premiumGuildSince = "premiumGuildSince",
 }
 
 export const UserProfileProperties = defineProperties<
@@ -42,4 +50,21 @@ export const UserProfileProperties = defineProperties<
         )
       : "",
   accentColor: (i) => i?.user.accent_color,
+  bannerColor: (i) => i?.user.banner_color,
+  bio: (i) => i?.user.bio,
+  clanID: (i) => i?.user.clan?.identity_guild_id,
+  clanBadge: (i) =>
+    i?.user.clan?.badge
+      ? CDNRoutes.guildTagBadge(
+          i.user.clan.identity_guild_id!,
+          i.user.clan.badge,
+          // @ts-ignore - im lzy
+          i.user.clan.badge.startsWith("a_") ? "gif" : "png",
+        )
+      : "",
+  clanTag: (i) => i?.user.clan?.tag,
+  premiumType: (i) => UserPremiumType[i?.premium_type!],
+  premiumSince: (i) => (i?.premium_since ? Date.parse(i.premium_since) : ""),
+  premiumGuildSince: (i) =>
+    i?.premium_guild_since ? Date.parse(i.premium_guild_since) : "",
 });
