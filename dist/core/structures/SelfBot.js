@@ -100,5 +100,8 @@ class SelfBot extends tiny_typed_emitter_1.TypedEmitter {
     get ping() {
         return this.lastPing;
     }
+    me(force = false) {
+        return this.rest.get("/users/@me", { force });
+    }
 }
 exports.SelfBot = SelfBot;

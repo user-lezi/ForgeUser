@@ -1,5 +1,5 @@
 import { TypedEmitter } from "tiny-typed-emitter";
-import { SelfBotEvents } from "../types";
+import { ISelfbotUser, SelfBotEvents } from "../types";
 import { REST } from "./REST";
 type TransformEvents<T> = {
     [P in keyof T]: T[P] extends any[] ? (...args: T[P]) => void : never;
@@ -22,5 +22,6 @@ export declare class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>
     private startHeartbeat;
     private send;
     get ping(): number;
+    me(force?: boolean): Promise<ISelfbotUser>;
 }
 export {};

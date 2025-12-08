@@ -1,4 +1,12 @@
 import { APIUser, APIUserPrimaryGuild, UserPremiumType } from "discord-api-types/v10";
+export interface ISelfbotUser extends IUser {
+    email: string | null;
+    verified: boolean;
+    phone: string | null;
+    nsfw_allowed: boolean;
+    authenticator_types: Array<any>;
+    age_verification_status: number;
+}
 export interface IUser extends Omit<APIUser, "avatar_decoration" | "avatar_decoration_data"> {
     banner_color: string | null;
     display_name_styles: null;

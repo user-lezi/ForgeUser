@@ -6,7 +6,7 @@ import {
   APIMessage,
 } from "discord-api-types/v10";
 import { TypedEmitter } from "tiny-typed-emitter";
-import { SelfBotEvents } from "../types";
+import { ISelfbotUser, SelfBotEvents } from "../types";
 import { REST } from "./REST";
 
 type TransformEvents<T> = {
@@ -150,5 +150,10 @@ export class SelfBot extends TypedEmitter<TransformEvents<SelfBotEvents>> {
   /** Ping yah */
   public get ping() {
     return this.lastPing;
+  }
+
+  /** Get the selfbot user information via /users/@me endpoint. */
+  public me(force = false) {
+    return this.rest.get<ISelfbotUser>("/users/@me", { force });
   }
 }
