@@ -1,14 +1,15 @@
-import { Arg, NativeFunction } from "@tryforge/forgescript";
+import { Arg, ArgType, NativeFunction } from "@tryforge/forgescript";
 import { PacketProperties, PacketProperty } from "../../properties/packet";
 import { GatewayDispatchPayload } from "discord-api-types/v10";
 
 export default new NativeFunction({
   name: "$gatewayDispatchPayload",
+  version: "1.0.0",
   aliases: ["$packet"],
   description: "Reads properties from the incoming gateway dispatch packet.",
   unwrap: true,
   brackets: false,
-
+  output: ArgType.Unknown,
   args: [Arg.optionalEnum(PacketProperty, "property", "The property to pull.")],
 
   async execute(ctx, [prop]) {
