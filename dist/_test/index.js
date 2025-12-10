@@ -28,6 +28,15 @@ user.commands.add({
     type: "error",
 });
 user.commands.add({
+    type: "raw",
+    code: `
+  $if[$packet[event]==READY;
+    $jsonLoad[d;$packet[data]]
+    $log[Logged on as @$env[d;user;username]]
+  ]
+  `
+});
+user.commands.add({
     type: "messageCreate",
     code: '$if[$getUserMessage[authorID]==910837428862984213;$sendMessage[$getUserMessage[channelID];omg "$getUserMessage[content]"]]',
 });
