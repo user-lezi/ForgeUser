@@ -1,0 +1,6 @@
+src
+.*
+tsconfig.json
+docs
+metadata
+dist/_test
