@@ -17,3 +17,4 @@ export declare class ForgeUser extends ForgeExtension {
     get bot(): SelfBot;
     get rest(): REST;
 }
+export type ForgeUserEventType = keyof IForgeUserEvents;

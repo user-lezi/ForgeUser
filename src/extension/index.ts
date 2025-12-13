@@ -63,3 +63,5 @@ export class ForgeUser extends ForgeExtension {
     return this.selfbot.rest;
   }
 }
+
+export type ForgeUserEventType = keyof IForgeUserEvents;
