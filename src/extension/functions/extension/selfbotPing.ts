@@ -3,6 +3,7 @@ import { ForgeUser } from "../..";
 
 export default new NativeFunction({
   name: "$selfbotPing",
+  aliases: ["$userPing"],
   description: "Returns the current SelfBot WebSocket ping (ms).",
   unwrap: true,
   version: "1.0.0",
