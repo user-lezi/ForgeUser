@@ -11,6 +11,7 @@ export declare enum MessageProperty {
     editTimestamp = "editTimestamp",
     hasPoll = "hasPoll",
     attachments = "attachments",
-    stickers = "stickers"
+    stickers = "stickers",
+    mentions = "mentions"
 }
 export declare const MessageProperties: import("@tryforge/forgescript/dist/functions/defineProperties").Properties<typeof MessageProperty, APIMessage>;

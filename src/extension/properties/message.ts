@@ -13,6 +13,7 @@ export enum MessageProperty {
   hasPoll = "hasPoll",
   attachments = "attachments",
   stickers = "stickers",
+  mentions = "mentions",
 }
 
 export const MessageProperties = defineProperties<
@@ -31,4 +32,5 @@ export const MessageProperties = defineProperties<
   hasPoll: (m) => !!m?.poll,
   attachments: (m, sep) => m?.attachments.map((x) => x.url).join(sep ?? ", "),
   stickers: (m, sep) => m?.sticker_items?.map((x) => x.id).join(sep ?? ","),
+  mentions: (m, sep) => m?.mentions.map((x) => x.id).join(sep ?? ","),
 });

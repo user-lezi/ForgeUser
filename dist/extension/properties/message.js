@@ -20,6 +20,7 @@ var MessageProperty;
     MessageProperty["hasPoll"] = "hasPoll";
     MessageProperty["attachments"] = "attachments";
     MessageProperty["stickers"] = "stickers";
+    MessageProperty["mentions"] = "mentions";
 })(MessageProperty || (exports.MessageProperty = MessageProperty = {}));
 exports.MessageProperties = (0, defineProperties_1.default)({
     content: (m) => m?.content,
@@ -34,4 +35,5 @@ exports.MessageProperties = (0, defineProperties_1.default)({
     hasPoll: (m) => !!m?.poll,
     attachments: (m, sep) => m?.attachments.map((x) => x.url).join(sep ?? ", "),
     stickers: (m, sep) => m?.sticker_items?.map((x) => x.id).join(sep ?? ","),
+    mentions: (m, sep) => m?.mentions.map((x) => x.id).join(sep ?? ","),
 });
