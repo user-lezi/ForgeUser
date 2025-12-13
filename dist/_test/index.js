@@ -34,7 +34,7 @@ user.commands.add({
     $jsonLoad[d;$packet[data]]
     $log[Logged on as @$env[d;user;username]]
   ]
-  `
+  `,
 });
 user.commands.add({
     type: "messageCreate",
