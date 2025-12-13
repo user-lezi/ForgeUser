@@ -27,7 +27,9 @@ export default new NativeFunction({
       if (!property) return this.successJSON(data.badges);
       return this.success(UserBadgeProperties[property](data, sep ?? ", "));
     } catch (err: any) {
-      return this.customError(err);
+      const msg = err?.message ?? err?.error ?? "Failed to send message.";
+
+      return this.customError(msg);
     }
   },
 });

@@ -32,7 +32,9 @@ export default new NativeFunction({
       if (!prop) return this.successJSON(data);
       return this.success(UserProfileProperties[prop](data, sep ?? ", "));
     } catch (err: any) {
-      return this.customError(err);
+      const msg = err?.message ?? err?.error ?? "Failed to send message.";
+
+      return this.customError(msg);
     }
   },
 });

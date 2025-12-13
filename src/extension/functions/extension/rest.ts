@@ -23,7 +23,9 @@ export default new NativeFunction({
         await rest[method.toLowerCase() as "post"](route, body ?? undefined),
       );
     } catch (err: any) {
-      return this.customError(err);
+      const msg = err?.message ?? err?.error ?? "Failed to send message.";
+
+      return this.customError(msg);
     }
   },
 });

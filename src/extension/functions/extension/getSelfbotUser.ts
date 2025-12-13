@@ -18,7 +18,9 @@ export default new NativeFunction({
 
       return this.successJSON(data);
     } catch (err: any) {
-      return this.customError(err);
+      const msg = err?.message ?? err?.error ?? "Failed to send message.";
+
+      return this.customError(msg);
     }
   },
 });

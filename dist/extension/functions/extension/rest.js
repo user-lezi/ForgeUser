@@ -20,7 +20,8 @@ exports.default = new forgescript_1.NativeFunction({
             return this.successFormatted(await rest[method.toLowerCase()](route, body ?? undefined));
         }
         catch (err) {
-            return this.customError(err);
+            const msg = err?.message ?? err?.error ?? "Failed to send message.";
+            return this.customError(msg);
         }
     },
 });

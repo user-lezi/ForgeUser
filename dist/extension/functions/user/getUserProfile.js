@@ -27,7 +27,8 @@ exports.default = new forgescript_1.NativeFunction({
             return this.success(userProfile_1.UserProfileProperties[prop](data, sep ?? ", "));
         }
         catch (err) {
-            return this.customError(err);
+            const msg = err?.message ?? err?.error ?? "Failed to send message.";
+            return this.customError(msg);
         }
     },
 });

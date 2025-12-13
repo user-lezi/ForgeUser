@@ -24,7 +24,8 @@ exports.default = new forgescript_1.NativeFunction({
             return this.success(userBadge_1.UserBadgeProperties[property](data, sep ?? ", "));
         }
         catch (err) {
-            return this.customError(err);
+            const msg = err?.message ?? err?.error ?? "Failed to send message.";
+            return this.customError(msg);
         }
     },
 });
