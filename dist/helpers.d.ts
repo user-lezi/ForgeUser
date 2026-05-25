@@ -38,5 +38,6 @@ export declare function getAndDestructure<K extends DestructurableKeys>(ctx: Con
 export declare function getSelfbotClient(ctx: Context): Client<boolean>;
 export declare const ViaSelfbot: {
     getChannel(client: Client, channelId: Snowflake): Promise<import("discord.js-selfbot-v13").AnyChannel | null>;
+    getDMChannel(client: Client, userId: Snowflake): Promise<import("discord.js-selfbot-v13").DMChannel | null>;
 };
 export {};

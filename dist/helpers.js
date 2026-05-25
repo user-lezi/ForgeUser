@@ -44,4 +44,10 @@ exports.ViaSelfbot = {
             cache: true,
         });
     },
+    async getDMChannel(client, userId) {
+        const user = await client.users.fetch(userId, { cache: true }).catch(() => null);
+        if (!user)
+            return null;
+        return user.createDM().catch(() => null);
+    },
 };

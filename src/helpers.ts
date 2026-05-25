@@ -123,4 +123,17 @@ export const ViaSelfbot = {
       cache: true,
     })
   },
+
+  /**
+   * Fetches or creates a DM channel with a user by their ID.
+   *
+   * @param client - The selfbot {@link Client} to use for the request.
+   * @param userId - The {@link Snowflake} ID of the user to DM.
+   * @returns A promise resolving to the {@link DMChannel}, or `null` if the user could not be resolved.
+   */
+  async getDMChannel(client: Client, userId: Snowflake) {
+    const user = await client.users.fetch(userId, { cache: true }).catch(() => null)
+    if (!user) return null
+    return user.createDM().catch(() => null)
+  },
 }
