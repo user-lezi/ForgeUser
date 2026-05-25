@@ -3,11 +3,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const forgescript_1 = require("@tryforge/forgescript");
 const dotenv_1 = require("dotenv");
 const index_1 = require("../index");
+const _2captcha_1 = require("2captcha");
 (0, dotenv_1.config)({ quiet: true });
+const solver = new _2captcha_1.Solver(process.env.CaptchaSolverKey);
 const user = new index_1.ForgeUser({
     token: process.env.UserToken,
-    events: ["ready", "messageCreate"],
+    events: ["ready", "messageCreate", "debug"],
     prefixes: [";"],
+    clientOptions: {
+        captchaSolver: function (captcha, UA) {
+            return solver
+                .hcaptcha(captcha.captcha_sitekey, "discord.com", {
+                invisible: 1,
+                userAgent: UA,
+                data: captcha.captcha_rqdata,
+            })
+                .then((res) => res.data);
+        },
+        captchaRetryLimit: 3,
+    },
 });
 const client = new forgescript_1.ForgeClient({
     token: process.env.BotToken,
@@ -15,6 +29,11 @@ const client = new forgescript_1.ForgeClient({
     extensions: [user],
     prefixes: ["~"],
     intents: ["Guilds", "GuildMembers", "GuildMessages", "MessageContent"],
+    logLevel: forgescript_1.LogPriority.High,
+});
+user.commands.add({
+    type: "debug",
+    code: "$sendMessage[1508408277094891551;$codeblock[$cropText[$debug;0;1980];js]]",
 });
 user.commands.add({
     type: "messageCreate",

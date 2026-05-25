@@ -1,12 +1,27 @@
-import { ForgeClient } from "@tryforge/forgescript"
+import { ForgeClient, LogPriority } from "@tryforge/forgescript"
 import { config } from "dotenv"
 import { ForgeUser } from "../index"
+import { Solver } from "2captcha"
 config({ quiet: true })
+
+const solver = new Solver(process.env.CaptchaSolverKey!)
 
 const user = new ForgeUser({
   token: process.env.UserToken!,
-  events: ["ready", "messageCreate"],
+  events: ["ready", "messageCreate", "debug"],
   prefixes: [";"],
+  clientOptions: {
+    captchaSolver: function (captcha, UA) {
+      return solver
+        .hcaptcha(captcha.captcha_sitekey, "discord.com", {
+          invisible: 1,
+          userAgent: UA,
+          data: captcha.captcha_rqdata,
+        })
+        .then((res) => res.data)
+    },
+    captchaRetryLimit: 3,
+  },
 })
 const client = new ForgeClient({
   token: process.env.BotToken!,
@@ -14,6 +29,7 @@ const client = new ForgeClient({
   extensions: [user],
   prefixes: ["~"],
   intents: ["Guilds", "GuildMembers", "GuildMessages", "MessageContent"],
+  logLevel: LogPriority.High,
 })
 
 // user.commands.add({
@@ -22,6 +38,11 @@ const client = new ForgeClient({
 //   $log[Logged in as @$env[userClient;user;username]]
 //   `,
 // })
+
+user.commands.add({
+  type: "debug",
+  code: "$sendMessage[1508408277094891551;$codeblock[$cropText[$debug;0;1980];js]]",
+})
 
 user.commands.add({
   type: "messageCreate",

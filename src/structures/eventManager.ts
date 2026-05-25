@@ -4,6 +4,7 @@ import { Client, Message } from "discord.js-selfbot-v13"
 
 export interface IForgeUserEvents {
   ready: [Client<true>]
+  debug: [string]
 
   messageCreate: [Message]
 }
