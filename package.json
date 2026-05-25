@@ -1,0 +1,48 @@
+{
+  "name": "forge.user",
+  "version": "1.0.",
+  "description": "A ForgeScript extension for user-accounts (educational-purposes).",
+  "keywords": [
+    "forgescript",
+    "forgeuser",
+    "selfbot"
+  ],
+  "homepage": "https://github.com/user-lezi/ForgeUser#readme",
+  "bugs": {
+    "url": "https://github.com/user-lezi/ForgeUser/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/user-lezi/ForgeUser.git"
+  },
+  "license": "GPL-3.0-only",
+  "author": "lezii",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublishOnly": "tsc",
+    "build": "tsc -p tsconfig.json",
+    "docgen": "npm run eslint && npm run build && typedoc ./src --plugin typedoc-rhineai-theme --out ./docs && node dist/docgen",
+    "eslint": "eslint ./src/**/* --fix && prettier src --write",
+    "test": "node dist/_test"
+  },
+  "devDependencies": {
+    "@tryforge/forgescript": "github:tryforge/ForgeScript#dev",
+    "@types/node": "^25.0.9",
+    "@typescript-eslint/eslint-plugin": "^8.53.0",
+    "@typescript-eslint/parser": "^8.53.0",
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.0",
+    "typedoc": "^0.28.16",
+    "typedoc-rhineai-theme": "^1.2.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "debug": "^4.4.3",
+    "discord.js-selfbot-v13": "github:aiko-chan-ai/discord.js-selfbot-v13"
+  }
+}

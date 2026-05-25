@@ -1,0 +1,1 @@
+[{"name":"messageCreate","version":"1.0.0","description":"This event is triggered when the user client receives a message."},{"name":"ready","version":"1.0.0","description":"This event is triggered when the user client is ready."}]
