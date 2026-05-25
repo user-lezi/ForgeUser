@@ -8,7 +8,7 @@ exports.default = new forgescript_1.NativeFunction({
     aliases: ["$createSelfbotMessage"],
     version: "1.0.0",
     unwrap: true,
-    brackets: false,
+    brackets: true,
     args: [
         forgescript_1.Arg.requiredString("channel ID", "The channel to send this message to"),
         forgescript_1.Arg.optionalString("content", "The content for the message"),
