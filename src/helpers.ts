@@ -1,5 +1,5 @@
 import { Context } from "@tryforge/forgescript"
-import { Client, Message, Snowflake } from "discord.js-selfbot-v13"
+import { APIRequest, Client, Message, Snowflake } from "discord.js-selfbot-v13"
 import { ForgeUser } from "."
 
 /**
@@ -8,6 +8,8 @@ import { ForgeUser } from "."
  */
 export const SelfbotEnvKeys = {
   message: "Selfbot_Message",
+  apiRequest: "Selfbot_api_req",
+  apiResponse: "Selfbot_api_res",
 } as const
 
 /**
@@ -15,6 +17,8 @@ export const SelfbotEnvKeys = {
  */
 export interface SelfbotEnvType {
   [SelfbotEnvKeys.message]: Message
+  [SelfbotEnvKeys.apiRequest]: APIRequest
+  [SelfbotEnvKeys.apiResponse]: { request: APIRequest; response: Response }
 }
 
 /**
@@ -104,7 +108,7 @@ export function getAndDestructure<K extends DestructurableKeys>(ctx: Context, ke
  * @throws If the {@link ForgeUser} extension is not registered on the bot.
  */
 export function getSelfbotClient(ctx: Context) {
-  return ctx.getExtension(ForgeUser, true).userClient
+  return ctx.getExtension(ForgeUser, true).userClient as Client<true>
 }
 
 /**

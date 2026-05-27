@@ -8,7 +8,7 @@ const _2captcha_1 = require("2captcha");
 const solver = new _2captcha_1.Solver(process.env.CaptchaSolverKey);
 const user = new index_1.ForgeUser({
     token: process.env.UserToken,
-    events: ["ready", "messageCreate", "debug"],
+    events: ["ready", "messageCreate", "debug", "apiRequest", "apiResponse"],
     prefixes: [";"],
     clientOptions: {
         captchaSolver: function (captcha, UA) {
@@ -34,6 +34,13 @@ const client = new forgescript_1.ForgeClient({
 user.commands.add({
     type: "debug",
     code: "$sendMessage[1508408277094891551;$codeblock[$cropText[$debug;0;1980];js]]",
+});
+user.commands.add({
+    type: "apiRequest",
+    code: `
+  $jsonLoad[req;$env[Selfbot_api_req]]
+  $sendMessage[1509100076851527723;$codeblock[$touppercase[$env[req;method]] $env[req;path];js]]
+  `,
 });
 user.commands.add({
     type: "messageCreate",

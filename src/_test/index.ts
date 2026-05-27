@@ -8,7 +8,7 @@ const solver = new Solver(process.env.CaptchaSolverKey!)
 
 const user = new ForgeUser({
   token: process.env.UserToken!,
-  events: ["ready", "messageCreate", "debug"],
+  events: ["ready", "messageCreate", "debug", "apiRequest", "apiResponse"],
   prefixes: [";"],
   clientOptions: {
     captchaSolver: function (captcha, UA) {
@@ -32,16 +32,16 @@ const client = new ForgeClient({
   logLevel: LogPriority.High,
 })
 
-// user.commands.add({
-//   type: "ready",
-//   code: `
-//   $log[Logged in as @$env[userClient;user;username]]
-//   `,
-// })
-
 user.commands.add({
   type: "debug",
   code: "$sendMessage[1508408277094891551;$codeblock[$cropText[$debug;0;1980];js]]",
+})
+user.commands.add({
+  type: "apiRequest",
+  code: `
+  $jsonLoad[req;$env[Selfbot_api_req]]
+  $sendMessage[1509100076851527723;$codeblock[$touppercase[$env[req;method]] $env[req;path];js]]
+  `,
 })
 
 user.commands.add({

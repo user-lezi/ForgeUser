@@ -1,10 +1,12 @@
 import { BaseEventHandler, ForgeClient } from "@tryforge/forgescript"
 import { ForgeUser } from ".."
-import { Client, Message } from "discord.js-selfbot-v13"
+import { APIRequest, Client, Message } from "discord.js-selfbot-v13"
 
 export interface IForgeUserEvents {
   ready: [Client<true>]
   debug: [string]
+  apiRequest: [APIRequest]
+  apiResponse: [APIRequest, Response]
 
   messageCreate: [Message]
 }

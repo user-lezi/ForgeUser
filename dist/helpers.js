@@ -8,6 +8,8 @@ exports.getSelfbotClient = getSelfbotClient;
 const _1 = require(".");
 exports.SelfbotEnvKeys = {
     message: "Selfbot_Message",
+    apiRequest: "Selfbot_api_req",
+    apiResponse: "Selfbot_api_res",
 };
 const destructurableKeys = new Set(["message"]);
 function isDestructurableKey(key) {
