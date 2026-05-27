@@ -30,6 +30,14 @@ export interface IRawForgeUserOptions {
    * Allows the user client to execute events triggered by other bots (and itself)
    */
   allowBots?: boolean
+
+  /**
+   * Allows the user bot to re-use messages that were edited to find possibly command calls.
+   * If a number is passed, it's treated as the amount of milliseconds that can pass before
+   * the message becomes completely unusable.
+   */
+  respondOnEdit?: number | boolean
+
   /** The events to listen */
   events: (keyof IForgeUserEvents)[]
 }
@@ -58,6 +66,7 @@ export class ForgeUser extends ForgeExtension {
       prefixCaseInsensitive: options.prefixCaseInsensitive ?? false,
       token: options.token ?? "",
       allowBots: options.allowBots ?? false,
+      respondOnEdit: options.respondOnEdit ?? false,
     }
     this.userClient = new Client(this.options.clientOptions)
     this.#__rawPrefixes = options.prefixes ?? []

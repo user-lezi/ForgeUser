@@ -1,6 +1,6 @@
 import { BaseEventHandler, ForgeClient } from "@tryforge/forgescript"
 import { ForgeUser } from ".."
-import { APIRequest, Client, Message } from "discord.js-selfbot-v13"
+import { APIRequest, Client, Collection, Message, Snowflake } from "discord.js-selfbot-v13"
 
 export interface IForgeUserEvents {
   ready: [Client<true>]
@@ -9,6 +9,9 @@ export interface IForgeUserEvents {
   apiResponse: [APIRequest, Response]
 
   messageCreate: [Message]
+  messageDelete: [Message]
+  messageDeleteBulk: [Collection<Snowflake, Message>]
+  messageUpdate: [Message, Message]
 }
 
 export class ForgeUserEventHandler<T extends keyof IForgeUserEvents> extends BaseEventHandler<IForgeUserEvents, T> {

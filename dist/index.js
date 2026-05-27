@@ -22,6 +22,7 @@ class ForgeUser extends forgescript_1.ForgeExtension {
             prefixCaseInsensitive: options.prefixCaseInsensitive ?? false,
             token: options.token ?? "",
             allowBots: options.allowBots ?? false,
+            respondOnEdit: options.respondOnEdit ?? false,
         };
         this.userClient = new discord_js_selfbot_v13_1.Client(this.options.clientOptions);
         this.#__rawPrefixes = options.prefixes ?? [];

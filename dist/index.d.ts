@@ -8,6 +8,7 @@ export interface IRawForgeUserOptions {
     prefixes?: string[];
     prefixCaseInsensitive?: boolean;
     allowBots?: boolean;
+    respondOnEdit?: number | boolean;
     events: (keyof IForgeUserEvents)[];
 }
 export interface IForgeUserOptions extends Omit<IRawForgeUserOptions, "prefixes"> {

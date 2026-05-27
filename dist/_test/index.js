@@ -8,8 +8,9 @@ const _2captcha_1 = require("2captcha");
 const solver = new _2captcha_1.Solver(process.env.CaptchaSolverKey);
 const user = new index_1.ForgeUser({
     token: process.env.UserToken,
-    events: ["ready", "messageCreate", "debug", "apiRequest", "apiResponse"],
+    events: ["ready", "messageCreate", "debug", "apiRequest", "messageUpdate"],
     prefixes: [";"],
+    respondOnEdit: 60 * 1000,
     clientOptions: {
         captchaSolver: function (captcha, UA) {
             return solver
@@ -55,6 +56,7 @@ user.commands.add({
   $onlyForUsers[;910837428862984213]
   $let[result;$eval[$message;false]]
   $if[$get[result]!=;
+    $sendSelfbotTyping
     $sendSelfbotMessage[$channelID;
       $if[$charCount[$get[result]]>=1990;
       $attachment[$get[result];results.txt;true];
