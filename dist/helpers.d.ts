@@ -46,5 +46,6 @@ export declare function getSelfbotClient(ctx: Context): Client<true>;
 export declare const ViaSelfbot: {
     getChannel(client: Client, channelId: Snowflake): Promise<import("discord.js-selfbot-v13").AnyChannel | null>;
     getDMChannel(client: Client, userId: Snowflake): Promise<import("discord.js-selfbot-v13").DMChannel | null>;
+    getMessage(client: Client, channelId: Snowflake, messageId: Snowflake): Promise<Message<boolean> | null>;
 };
 export {};

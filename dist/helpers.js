@@ -52,4 +52,10 @@ exports.ViaSelfbot = {
             return null;
         return user.createDM().catch(() => null);
     },
+    async getMessage(client, channelId, messageId) {
+        const channel = await exports.ViaSelfbot.getChannel(client, channelId).catch(() => null);
+        if (!channel || !channel.isText())
+            return null;
+        return Promise.resolve(channel.messages.fetch(messageId)).catch(() => null);
+    },
 };

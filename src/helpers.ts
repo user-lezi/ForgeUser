@@ -140,4 +140,18 @@ export const ViaSelfbot = {
     if (!user) return null
     return user.createDM().catch(() => null)
   },
+
+  /**
+   * Fetches a message by ID from a specific channel.
+   *
+   * @param client - The selfbot {@link Client} to use for the request.
+   * @param channelId - The {@link Snowflake} ID of the channel containing the message.
+   * @param messageId - The {@link Snowflake} ID of the message to fetch.
+   * @returns A promise resolving to the fetched {@link Message}, or `null` if the channel or message could not be resolved.
+   */
+  async getMessage(client: Client, channelId: Snowflake, messageId: Snowflake) {
+    const channel = await ViaSelfbot.getChannel(client, channelId).catch(() => null)
+    if (!channel || !channel.isText()) return null
+    return Promise.resolve(channel.messages.fetch(messageId)).catch(() => null)
+  },
 }
