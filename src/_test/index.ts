@@ -7,7 +7,7 @@ config({ quiet: true })
 const solver = new Solver(process.env.CaptchaSolverKey!)
 
 const user = new ForgeUser({
-  token: process.env.UserToken!,
+  doNotLogin: false,
   events: ["ready", "messageCreate", "debug", "apiRequest", "messageUpdate"],
   prefixes: [";"],
   respondOnEdit: 60 * 1000,
@@ -32,6 +32,10 @@ const client = new ForgeClient({
   intents: ["Guilds", "GuildMembers", "GuildMessages", "MessageContent"],
   logLevel: LogPriority.High,
 })
+
+/** Multiple accounts */
+user.tokens.add(process.env.UserToken!)
+// user.tokens.add(process.env.UserToken2!, "owo");
 
 user.commands.add({
   type: "debug",

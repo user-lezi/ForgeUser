@@ -2,9 +2,11 @@ import { ForgeClient, ForgeExtension, IExtendedCompilationResult } from "@tryfor
 import { Client, ClientOptions, Message } from "discord.js-selfbot-v13";
 import { IForgeUserEvents } from "./structures/eventManager";
 import { ForgeUserCommandManager } from "./structures/commandManager";
+import { IToken, TokenManager } from "./structures/tokenManager";
 export interface IRawForgeUserOptions {
     clientOptions: ClientOptions;
-    token: string;
+    doNotLogin?: boolean;
+    clearInvalidTokens?: boolean;
     prefixes?: string[];
     prefixCaseInsensitive?: boolean;
     allowBots?: boolean;
@@ -14,6 +16,9 @@ export interface IRawForgeUserOptions {
 export interface IForgeUserOptions extends Omit<IRawForgeUserOptions, "prefixes"> {
     prefixes: IExtendedCompilationResult[];
 }
+interface IOnlyToken {
+    token: string;
+}
 export declare class ForgeUser extends ForgeExtension {
     #private;
     name: string;
@@ -22,8 +27,12 @@ export declare class ForgeUser extends ForgeExtension {
     options: Required<IForgeUserOptions>;
     userClient: Client;
     commands: ForgeUserCommandManager;
-    constructor(options?: Partial<IRawForgeUserOptions>);
+    tokens: TokenManager;
+    constructor(options?: Partial<IRawForgeUserOptions & IOnlyToken>);
     init(client: ForgeClient): void;
-    login(): Promise<string>;
+    login(nameOrToken?: string): Promise<void>;
+    switchAccount(nameOrToken: string): Promise<void>;
+    get currentToken(): IToken | null;
     getPrefix(msg: Message): Promise<string | null>;
 }
+export * from "./structures";

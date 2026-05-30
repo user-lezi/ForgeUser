@@ -1,49 +1,35 @@
 import {
-  BaseCommand,
   Compiler,
   EventManager,
   ForgeClient,
   ForgeExtension,
   IExtendedCompilationResult,
   Interpreter,
+  Logger,
 } from "@tryforge/forgescript"
 import { Client, ClientOptions, Message } from "discord.js-selfbot-v13"
 import { IForgeUserEvents } from "./structures/eventManager"
 import { ForgeUserCommandManager } from "./structures/commandManager"
 import { destructure, SelfbotEnvKeys } from "./helpers"
+import { IToken, TokenManager } from "./structures/tokenManager"
 
-/** ForgeUser Options */
 export interface IRawForgeUserOptions {
-  /** Client options for selfbot client */
   clientOptions: ClientOptions
-  /** User Token */
-  token: string
-  /**
-   * The prefixes our user client will act upon for command messages
-   */
+  doNotLogin?: boolean
+  clearInvalidTokens?: boolean
   prefixes?: string[]
-  /**
-   *  Whether prefixes should be case-insensitive, this only affects letters
-   */
   prefixCaseInsensitive?: boolean
-  /**
-   * Allows the user client to execute events triggered by other bots (and itself)
-   */
   allowBots?: boolean
-
-  /**
-   * Allows the user bot to re-use messages that were edited to find possibly command calls.
-   * If a number is passed, it's treated as the amount of milliseconds that can pass before
-   * the message becomes completely unusable.
-   */
   respondOnEdit?: number | boolean
-
-  /** The events to listen */
   events: (keyof IForgeUserEvents)[]
 }
 
 export interface IForgeUserOptions extends Omit<IRawForgeUserOptions, "prefixes"> {
   prefixes: IExtendedCompilationResult[]
+}
+
+interface IOnlyToken {
+  token: string
 }
 
 export class ForgeUser extends ForgeExtension {
@@ -55,26 +41,28 @@ export class ForgeUser extends ForgeExtension {
   public options: Required<IForgeUserOptions>
   public userClient: Client
   public commands!: ForgeUserCommandManager
+  public tokens = new TokenManager()
 
-  public constructor(options: Partial<IRawForgeUserOptions> = {}) {
+  public constructor(options: Partial<IRawForgeUserOptions & IOnlyToken> = {}) {
     super()
 
     this.options = {
       clientOptions: options.clientOptions ?? {},
       events: options.events ?? [],
+      doNotLogin: options.doNotLogin ?? false,
+      clearInvalidTokens: options.clearInvalidTokens ?? true,
       prefixes: [],
       prefixCaseInsensitive: options.prefixCaseInsensitive ?? false,
-      token: options.token ?? "",
       allowBots: options.allowBots ?? false,
       respondOnEdit: options.respondOnEdit ?? false,
     }
+
     this.userClient = new Client(this.options.clientOptions)
     this.#__rawPrefixes = options.prefixes ?? []
+
+    if (options.token) this.tokens.add(options.token)
   }
 
-  /**
-   * Called by ForgeScript automatically when the extension initializes.
-   */
   public init(client: ForgeClient): void {
     this.commands = new ForgeUserCommandManager(client)
 
@@ -84,24 +72,65 @@ export class ForgeUser extends ForgeExtension {
     if (this.options?.events?.length) client.events.load("ForgeUserEvents", this.options.events)
 
     client.on("clientReady", async () => {
-      // Login
-      await this.login()
+      if (!this.options.doNotLogin && !this.currentToken) await this.login()
 
-      // load prefixes
-      this.options.prefixes = this.#__rawPrefixes.map((x) => Compiler.compile(x)) ?? []
+      await this.#validateTokens()
+      await this.#compilePrefixes()
     })
   }
 
-  public login() {
-    if (!this.options.token) throw new Error("No token found.")
-    return this.userClient.login(this.options.token)
+  async #compilePrefixes() {
+    this.options.prefixes = this.#__rawPrefixes.map((x) => Compiler.compile(x))
+  }
+  async #validateTokens(): Promise<void> {
+    const results = await this.tokens.validateAll()
+    const valid = [...results.entries()].filter(([, v]) => v)
+    const invalid = [...results.entries()].filter(([, v]) => !v)
+
+    Logger.info(
+      `[ForgeUser] Token Validation — ${valid.length} valid, ${invalid.length} invalid\n` +
+        this.tokens
+          .all()
+          .map((x) => `  ${x.valid ? "✓" : "✗"} ${x.name} (ID: ${x.id})`)
+          .join("\n")
+    )
+
+    if (invalid.length && this.options.clearInvalidTokens) {
+      for (const [name] of invalid) this.tokens.remove(name)
+      Logger.warn(`[ForgeUser] Cleared ${invalid.length} invalid token(s): ${invalid.map(([n]) => n).join(", ")}`)
+    }
+  }
+
+  public async login(nameOrToken?: string): Promise<void> {
+    if (nameOrToken) {
+      const entry = this.tokens.get(nameOrToken)
+      if (!entry) throw new Error(`No token found for "${nameOrToken}".`)
+      await this.userClient.login(entry.token)
+      return
+    }
+
+    const all = this.tokens.all()
+    if (!all.length) throw new Error("No tokens registered in TokenManager.")
+    await this.userClient.login(all[0].token)
+  }
+
+  public async switchAccount(nameOrToken: string): Promise<void> {
+    const entry = this.tokens.get(nameOrToken)
+    if (!entry) throw new Error(`No token found for "${nameOrToken}".`)
+    if (this.currentToken) await this.userClient.logout()
+    await this.userClient.login(entry.token).then(() => this.#compilePrefixes())
+  }
+
+  public get currentToken(): IToken | null {
+    if (!this.userClient.token) return null
+    return this.tokens.get(this.userClient.token) ?? null
   }
 
   public async getPrefix(msg: Message): Promise<string | null> {
     for (let i = 0, len = this.options.prefixes.length; i < len; i++) {
       const raw = this.options.prefixes[i]
       const resolved = await Interpreter.run({
-        // @ts-ignore - ok
+        // @ts-ignore
         client: msg.client,
         command: null,
         data: raw,
@@ -126,3 +155,5 @@ export class ForgeUser extends ForgeExtension {
     return null
   }
 }
+
+export * from "./structures"

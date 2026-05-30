@@ -7,7 +7,7 @@ const _2captcha_1 = require("2captcha");
 (0, dotenv_1.config)({ quiet: true });
 const solver = new _2captcha_1.Solver(process.env.CaptchaSolverKey);
 const user = new index_1.ForgeUser({
-    token: process.env.UserToken,
+    doNotLogin: false,
     events: ["ready", "messageCreate", "debug", "apiRequest", "messageUpdate"],
     prefixes: [";"],
     respondOnEdit: 60 * 1000,
@@ -32,6 +32,7 @@ const client = new forgescript_1.ForgeClient({
     intents: ["Guilds", "GuildMembers", "GuildMessages", "MessageContent"],
     logLevel: forgescript_1.LogPriority.High,
 });
+user.tokens.add(process.env.UserToken);
 user.commands.add({
     type: "debug",
     code: "$sendMessage[1508408277094891551;$codeblock[$cropText[$debug;0;1980];js]]",
